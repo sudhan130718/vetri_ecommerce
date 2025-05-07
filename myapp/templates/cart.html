@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/cart.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<h2>My Cart</h2>
+{% if items %}
+<div class="cart-table">
+    <div class="cart-header">
+        <div>Image</div>
+        <div>Name</div>
+        <div>Price</div>
+        <div>Qty</div>
+        <div>Total</div>
+        <div>Actions</div>
+    </div>
+    {% for item in items %}
+    <div class="cart-row">
+        <div><img src="{{ item.product.image.url }}" width="60" /></div>
+        <div>{{ item.product.name }}</div>
+        <div>₹{{ item.product.price }}</div>
+        <div>{{ item.quantity }}</div>
+        <div>₹{{ item.total_price }}</div>
+        <div>
+            <a href="{% url 'update_quantity' item.id 'increase' %}">+</a>
+            <a href="{% url 'update_quantity' item.id 'decrease' %}">-</a>
+            <a href="{% url 'remove_item' item.id %}">Remove</a>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+<h3 style="text-align:right;">Total: ₹{{ cart.total }}</h3>
+
+<div class="cart-footer">
+    <a href="{% url 'product_list1' %}" class="continue-shopping">← Continue Shopping</a>
+    <a href="{% url 'checkout' %}" class="checkout-btn">Proceed to Checkout</a>
+</div>
+
+{% else %}
+<p>Your cart is empty.</p>
+<br>
+<a href="{% url 'product_list1' %}" class="continue-shopping">← Continue Shopping</a>
+{% endif %}
+
+{% endblock %}

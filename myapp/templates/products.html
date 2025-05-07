@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/products.css' %}">
+
+{% endblock %}
+
+{% block content %}
+
+
+
+
+
+
+<div class="container">
+
+    <div class="search-container">
+        <input type="text" id="searchInput" name="q" class="search-input" placeholder="Search for products...">
+        <button type="submit" class="search-btn">🔍</button>
+    </div>
+    
+    <br>
+    
+    <h1 style="text-align: center;">Products</h1>
+    <hr>
+    <br>
+    
+<aside>
+<p><strong>Filters:</strong></p>
+<hr>
+<br>
+    
+
+    <div id="price-filter">
+     
+        <label for="minPrice">Min Price:</label>
+        <input type="number" id="minPrice" value="0" min="0" max="100000" oninput="filterByPrice()">
+      
+        <label for="maxPrice">Max Price:</label>
+        <input type="number" id="maxPrice" value="100000" min="0" max="100000" oninput="filterByPrice()">
+      </div>
+      <br>
+      <hr>
+      <div class="filter-container">
+        <p style="color: blue;">Filter by Category:</p>
+        <br>
+        <select id="categoryFilter" onchange="filterProducts()">
+            <option value="all">All Categories</option>
+            {% for category in categories %}
+                <option value="{{ category.name }}">{{ category.name }}</option>
+            {% endfor %}
+        </select>
+        <hr>
+    <br>
+    <p style="color: blue;">Filter by Brand:</p>
+    <br>
+        <select id="brandFilter" onchange="filterProducts()">
+            <option value="all">All Brands</option>
+            {% for brand in brands %}
+                <option value="{{ brand.name }}">{{ brand.name }}</option>
+            {% endfor %}
+        </select>
+        <hr>
+    </div>
+    
+       
+     </aside>
+    
+    <div id="product-list" class="product-container">
+        {% for product in products %}
+        <div class="product-card" data-name="{{ product.name|lower }}" data-price="{{product.price }}" data-category="{{product.category }}" data-brand="{{product.brand }}">
+            <img src="{{ product.image.url }}" alt="{{ product.name }}">
+            <h2>{{ product.name }}</h2>
+            <p>₹{{ product.price }}</p>
+            <div class="button-group">
+                <a href="{% url 'add_to_cart' product.id %}">
+                    <button class="btn-primary">Add to Cart</button>
+                </a>
+                <a href="{% url 'add_to_cart' product.id %}">
+                    <button class="btn-primary buy-now">Buy Now</button>
+                </a>
+            </div>
+            <a href="{% url 'product_detail' product.id %}">View Details</a>
+        </div>
+        {% empty %}
+        <p>No products available.</p>
+        {% endfor %}
+    </div>
+    
+ </div>
+
+
+{% endblock %}
+

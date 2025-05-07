@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Vetri Ecommerce</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'css/base.css' %}">
+  
+  {% block extra_css %}{% endblock %}
+  <script src="{% static 'js/checkout.js' %}"></script>
+  <script src="{% static 'js/banner.js' %}"></script>
+  <script src="{% static 'js/search.js' %}"></script>
+
+</head>
+<body>
+  <h1 class="header">Vetri e-Commerce</h1>
+
+  <nav>
+    <ul class="nav-menu">
+      <li class="nav-menu-list"><a href="{% url 'product_list1' %}">Home</a></li>
+  
+      <li class="nav-menu-list dropdown">
+        <a href="{% url 'products' %}">Products</a>
+        <ul class="dropdown-menu">
+          <li><a href="#">Electronics</a></li>
+          <li><a href="#">Mobiles</a></li>
+          <li><a href="#">Laptops</a></li>
+        
+        </ul>
+      </li>
+  
+      <li class="nav-menu-list"><a href="{% url 'product_list' %}">Admin</a></li>
+      <li class="nav-menu-list"><a href="{% url 'view_cart' %}">Cart</a></li>
+  
+      {% if user.is_authenticated %}
+        <li class="nav-menu-list"><a href="{% url 'logout' %}">Logout</a></li>
+        <li class="nav-menu-list welcome-message">Welcome, {{ user.username }}!</li>
+      {% else %}
+        <li class="nav-menu-list"><a href="{% url 'login' %}">Login</a></li>
+      {% endif %}
+    </ul>
+  </nav>
+  
+
+  <main>
+    {% block content %}
+    {% endblock %}
+  </main>
+
+
+  <footer class="footer">
+    <div class="footer-container">
+      <div class="footer-section">
+        <h2>Vetri e-Commerce</h2>
+        <p>Bringing you quality products at the best prices.</p>
+      </div>
+  
+      <div class="footer-section">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="#">Home</a></li>
+          <li><a href="#">Shop</a></li>
+          <li><a href="#">Cart</a></li>
+          <li><a href="#">Orders</a></li>
+          <li><a href="#">Contact Us</a></li>
+        </ul>
+      </div>
+  
+      <div class="footer-section">
+        <h4>Contact</h4>
+        <p>Email: support@vetri-ecom.com</p>
+        <p>Phone: +91 78765 43210</p>
+        <p>Location: Thenkasi, India</p>
+      </div>
+    </div>
+  
+    <div class="footer-bottom">
+      <p>&copy; 2025 Vetri e-Commerce. All rights reserved.</p>
+    </div>
+  </footer>
+  
+  
+</body>
+</html>

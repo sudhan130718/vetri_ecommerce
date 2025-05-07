@@ -1,0 +1,21 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Product Form</title>
+    <link rel="stylesheet" href="{% static 'css/product_form.css' %}">
+</head>
+<body>
+  <div class="container">
+    <h2>{{ form.instance.pk|yesno:"Edit Product,Create Product" }}</h2>
+    <a href="{% url 'product_list' %}" class="add-btn">Product list</a>
+        <form method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit">
+        {{ form.instance.pk|yesno:"Update Product,Add Product" }}
+      </button>
+          </form>
+  </div>
+</body>
+</html>
